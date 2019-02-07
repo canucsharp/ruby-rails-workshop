@@ -14,7 +14,13 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
-  # WRITE THIS CODE
+	if (a = b = c)
+		put "The triangle is equilateral"
+	else if ( a = b ) || (a = c) || (b = c)
+		put "The triangle is isosceles"
+	else
+		put "The triangle is scalene"
+	end
 end
 
 # Error class used in part 2.  No need to change this code.
