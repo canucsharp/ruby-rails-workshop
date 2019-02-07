@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutClasses < Neo::Koan
+class AboutClasses < EdgeCase::Koan
   class Dog
   end
 
@@ -126,7 +126,7 @@ class AboutClasses < Neo::Koan
     # Why is this so?
   end
 
-  def test_different_objects_have_different_instance_variables
+  def test_different_objects_have_difference_instance_variables
     fido = Dog6.new("Fido")
     rover = Dog6.new("Rover")
 
@@ -147,7 +147,7 @@ class AboutClasses < Neo::Koan
     end
 
     def to_s
-      @name
+      __
     end
 
     def inspect

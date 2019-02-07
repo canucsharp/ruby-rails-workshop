@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutStrings < Neo::Koan
+class AboutStrings < EdgeCase::Koan
   def test_double_quoted_strings_are_strings
     string = "Hello, World"
     assert_equal true, string.is_a?(String)
@@ -40,9 +40,7 @@ class AboutStrings < Neo::Koan
 It was the best of times,
 It was the worst of times.
 }
-    assert_equal 54, long_string.length
-    assert_equal 3, long_string.lines.count
-    assert_equal "\n", long_string[0,1]
+    assert_equal 54, long_string.size
   end
 
   def test_here_documents_can_also_handle_multiple_lines
@@ -50,9 +48,7 @@ It was the worst of times.
 It was the best of times,
 It was the worst of times.
 EOS
-    assert_equal 53, long_string.length
-    assert_equal 2, long_string.lines.count
-    assert_equal "I", long_string[0,1]
+    assert_equal 53, long_string.size
   end
 
   def test_plus_will_concatenate_two_strings
@@ -151,7 +147,7 @@ EOS
   end
 
   in_ruby_version("1.8") do
-    def test_in_older_ruby_single_characters_are_represented_by_integers
+    def test_in_ruby_1_8_single_characters_are_represented_by_integers
       assert_equal __, ?a
       assert_equal __, ?a == 97
 
@@ -159,10 +155,10 @@ EOS
     end
   end
 
-  in_ruby_version("1.9", "2") do
-    def test_in_modern_ruby_single_characters_are_represented_by_strings
-      assert_equal "a", ?a
-      assert_equal false, ?a == 97
+  in_ruby_version("1.9") do
+    def test_in_ruby_1_9_single_characters_are_represented_by_strings
+      assert_equal __, ?a
+      assert_equal __, ?a == 97
     end
   end
 
@@ -187,7 +183,7 @@ EOS
     assert_equal "Now is the time", words.join(" ")
   end
 
-  def test_strings_are_unique_objects
+  def test_strings_are_not_unique_objects
     a = "a string"
     b = "a string"
 

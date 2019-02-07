@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutBlocks < Neo::Koan
+class AboutBlocks < EdgeCase::Koan
   def method_with_block
     result = yield
     result
@@ -23,7 +23,7 @@ class AboutBlocks < Neo::Koan
   end
 
   def test_blocks_can_take_arguments
-    method_with_block_arguments do |argument|
+    result = method_with_block_arguments do |argument|
       assert_equal "Jim", argument
     end
   end
@@ -70,7 +70,7 @@ class AboutBlocks < Neo::Koan
     add_one = lambda { |n| n + 1 }
     assert_equal 11, add_one.call(10)
 
-    # Alternative calling syntax
+    # Alternative calling sequence
     assert_equal 11, add_one[10]
   end
 

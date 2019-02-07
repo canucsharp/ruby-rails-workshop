@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutClassMethods < Neo::Koan
+class AboutClassMethods < EdgeCase::Koan
   class Dog
   end
 
@@ -47,7 +47,7 @@ class AboutClassMethods < Neo::Koan
   end
 
   # ------------------------------------------------------------------
-
+  
   class Dog2
     def wag
       :instance_level_wag
@@ -96,13 +96,14 @@ class AboutClassMethods < Neo::Koan
   def test_you_can_define_class_methods_inside_the_class
     assert_equal :dogs_class_method, Dog.a_class_method
   end
+      
 
   # ------------------------------------------------------------------
 
   LastExpressionInClassStatement = class Dog
                                      21
                                    end
-
+  
   def test_class_statements_return_the_value_of_their_last_expression
     assert_equal 21, LastExpressionInClassStatement
   end

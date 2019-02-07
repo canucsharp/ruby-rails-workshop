@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutInheritance < Neo::Koan
+class AboutInheritance < EdgeCase::Koan
   class Dog
     attr_reader :name
 
@@ -31,7 +31,7 @@ class AboutInheritance < Neo::Koan
     assert_equal true, Chihuahua.ancestors.include?(Object)
   end
 
-  def test_subclasses_inherit_behavior_from_parent_class
+  def test_subcases_inherit_behavior_from_parent_class
     chico = Chihuahua.new("Chico")
     assert_equal "Chico", chico.name
   end

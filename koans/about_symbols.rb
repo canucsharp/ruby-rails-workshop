@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutSymbols < Neo::Koan
+class AboutSymbols < EdgeCase::Koan
   def test_symbols_are_symbols
     symbol = :ruby
     assert_equal true, symbol.is_a?(Symbol)
@@ -11,8 +11,8 @@ class AboutSymbols < Neo::Koan
     symbol2 = :a_symbol
     symbol3 = :something_else
 
-    assert_equal true, symbol1 == symbol2
-    assert_equal false, symbol1 == symbol3
+    assert symbol1 == symbol2
+    assert symbol1 != symbol3
   end
 
   def test_identical_symbols_are_a_single_internal_object
@@ -24,21 +24,20 @@ class AboutSymbols < Neo::Koan
   end
 
   def test_method_names_become_symbols
-    symbols_as_strings = Symbol.all_symbols.map { |x| x.to_s }
-    assert_equal true, symbols_as_strings.include?("test_method_names_become_symbols")
+    assert_equal true, Symbol.all_symbols.include?("test_method_names_become_symbols".to_sym)
   end
 
   # THINK ABOUT IT:
   #
-  # Why do we convert the list of symbols to strings and then compare
-  # against the string value rather than against symbols?
+  # Why do we capture the list of symbols before we check for the
+  # method name?
 
   in_ruby_version("mri") do
     RubyConstant = "What is the sound of one hand clapping?"
     def test_constants_become_symbols
-      all_symbols_as_strings = Symbol.all_symbols.map { |x| x.to_s }
+      all_symbols = Symbol.all_symbols
 
-      assert_equal false, all_symbols_as_strings.include?(__)
+      assert_equal false, all_symbols.include?(__)
     end
   end
 
@@ -50,14 +49,14 @@ class AboutSymbols < Neo::Koan
   def test_symbols_with_spaces_can_be_built
     symbol = :"cats and dogs"
 
-    assert_equal :"cats and dogs".to_sym, symbol
+    assert_equal symbol, :"cats and dogs".to_sym
   end
 
   def test_symbols_with_interpolation_can_be_built
     value = "and"
     symbol = :"cats #{value} dogs"
 
-    assert_equal :"cats and dogs".to_sym, symbol
+    assert_equal symbol, :"cats and dogs".to_sym
   end
 
   def test_to_s_is_called_on_interpolated_symbols
@@ -84,7 +83,7 @@ class AboutSymbols < Neo::Koan
   # interesting string operations are available on symbols.
 
   def test_symbols_cannot_be_concatenated
-    # Exceptions will be pondered further down the path
+    # Exceptions will be pondered further father down the path
     assert_raise(NoMethodError) do
       :cats + :dogs
     end

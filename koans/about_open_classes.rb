@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutOpenClasses < Neo::Koan
+class AboutOpenClasses < EdgeCase::Koan
   class Dog
     def bark
       "WOOF"
@@ -41,5 +41,5 @@ class AboutOpenClasses < Neo::Koan
   end
 
   # NOTE: To understand why we need the :: before Integer, you need to
-  # become enlightened about scope.
+  # become enlightened about scope.  
 end

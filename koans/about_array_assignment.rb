@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutArrayAssignment < Neo::Koan
+class AboutArrayAssignment < EdgeCase::Koan
   def test_non_parallel_assignment
     names = ["John", "Smith"]
     assert_equal ["John", "Smith"], names

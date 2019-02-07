@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/neo')
+require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 
-class AboutMessagePassing < Neo::Koan
+class AboutMessagePassing < EdgeCase::Koan
 
   class MessageCatcher
     def caught?
@@ -63,13 +63,6 @@ class AboutMessagePassing < Neo::Koan
     assert_equal [3, 4, nil, 6], mc.send(:add_a_payload, 3, 4, nil, 6)
   end
 
-  # NOTE:
-  #
-  # Both obj.msg and obj.send(:msg) sends the message named :msg to
-  # the object. We use "send" when the name of the message can vary
-  # dynamically (e.g. calculated at run time), but by far the most
-  # common way of sending a message is just to say: obj.msg.
-
   # ------------------------------------------------------------------
 
   class TypicalObject
@@ -100,13 +93,13 @@ class AboutMessagePassing < Neo::Koan
     # NOTE:
     #
     # In Ruby 1.8 the method_missing method is public and can be
-    # called as shown above. However, in Ruby 1.9 (and later versions)
-    # the method_missing method is private. We explicitly made it
-    # public in the testing framework so this example works in both
-    # versions of Ruby. Just keep in mind you can't call
-    # method_missing like that after Ruby 1.9 normally.
+    # called as shown above.  However, in Ruby 1.9 the method_missing
+    # method is private.  We explicitly made it public in the testing
+    # framework so this example works in both versions of Ruby.  Just
+    # keep in mind you can't call method_missing like that in Ruby
+    # 1.9. normally.
     #
-    # Thanks.  We now return you to your regularly scheduled Ruby
+    # Thanks.  We now return you to your regularly schedule Ruby
     # Koans.
   end
 
@@ -129,7 +122,7 @@ class AboutMessagePassing < Neo::Koan
   def test_catching_messages_makes_respond_to_lie
     catcher = AllMessageCatcher.new
 
-    assert_nothing_raised do
+    assert_nothing_raised(NoMethodError) do
       catcher.any_method
     end
     assert_equal false, catcher.respond_to?(:any_method)
