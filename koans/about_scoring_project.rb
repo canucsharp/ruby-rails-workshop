@@ -29,12 +29,53 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 #
 # Your goal is to write the score method.
 
-def score(dice)
+def makeArray(value,key)
+	value.times.inject([]) {|v| v << key}
+end
+
+def score(dices)
   # You need to write this method
+# * A set of three ones is 1000 points
+#
+# * A set of three numbers (other than ones) is worth 100 times the
+#   number. (e.g. three fives is 500 points).
+#
+# * A one (that is not part of a set of three) is worth 100 points.
+#
+# * A five (that is not part of a set of three) is worth 50 points.
+#
+# * Everything else is worth 0 points.
+
+	counter = {}
+	dices.each do |dice|
+		counter[dice] = dices.count(dice) if !counter[dice]
+	end
+	scoreT = 0
+
+	counter.each_pair do |key,value|
+		if value == 3
+			if key == 1
+				scoreT += 1000
+			else
+				scoreT += key * 100
+			end
+		elsif value > 3
+			res = value - 3
+			scoreT += score(makeArray(res,key))
+			scoreT += score(makeArray(3,key))
+		elsif key == 1
+				scoreT += value *100
+		elsif key == 5
+			scoreT += value *50
+		end
+	end		
+	return scoreT
 end
 
 class AboutScoringProject < EdgeCase::Koan
+		
   def test_score_of_an_empty_list_is_zero
+		score([1,1,5])
     assert_equal 0, score([])
   end
 
